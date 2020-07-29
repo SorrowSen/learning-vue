@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>记事本</title>
+</head>
+
+<body>
+    <div id="app">
+        <input v-model="inputValue" @keyup.enter="add" /><button @click="add">
+            添加
+        </button>
+        <ul>
+            <li v-for="(item,index) in list">
+                <span> {{ index+1 }} </span> ,, <label>{{item}}</label>
+                <button @click="remove(index)">x</button>
+            </li>
+        </ul>
+        <div v-show="list.length!=0">
+            {{list.length}}
+
+            <button @click="removeall">清空</button>
+        </div>
+    </div>
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                list: ["test1", "test2", "test3"],
+                inputValue: "好好学习天天向上",
+            },
+            methods: {
+                add: function () {
+                    this.list.push(this.inputValue);
+                },
+                remove: function (index) {
+                    this.list.splice(index, 1);
+                },
+                removeall: function () {
+                    this.list = [];
+                },
+            },
+        });
+    </script>
+</body>
+
+</html>

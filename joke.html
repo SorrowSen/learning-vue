@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="app">
+        <input type="button" value="获取笑话" @click="getJoke">
+        {{joke}}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <script>
+        // $(".get").click(function(){
+        //     axios.get("https://autumnfish.cn/api/joke/list?num=6").then(
+        //     function(response){
+        //         console.log(response);
+        //     },function(err){
+        //         console.log("error");
+        //     })
+        // });
+
+        // $(".post").click(function(){
+        //     axios.post("https://autumnfish.cn/api/user/reg",{username:"jack"}).then(
+        //     function(response){
+        //         console.log(response);
+        //     },function(err){
+        //         console.log("error");
+        //     })
+        // })
+        
+        var app = new Vue({
+            el:"#app",
+            data:{
+                joke:"test"
+            },
+            methods:{
+                getJoke:function(){
+                    var that = this;
+                    axios.get("https://autumnfish.cn/api/joke").then
+                    (function(response){
+                        console.log(response.data);
+                            that.joke = response.data;
+                        },function(err){
+                            console.log("error");
+                        }
+                    )
+                }
+            }
+        })
+    </script>
+    
+
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style type="text/css">
+html{
+    width: 100%;
+    height: 100%;
+}
+body{
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+}
+#app{
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    flex-direction:column
+}
+.logo{
+    margin:80px 0px 40px 0px;
+}
+.bsh{
+    width: 219.67px;
+}
+.tianqi{
+    display: flex;
+    flex-direction:row
+}
+</style>
+</head>
+<body>
+    <div id="app">
+        <div class="logo">天气</div>
+        <div class="chaxunbox">
+            <input type="text" v-model="city" @keyup.enter="searchWeather"><input type="button" value="查询" @click="searchWeather">
+        </div>
+        <div class="bsh">
+            <a @click="changercity('北京')">北京</a>
+            <a @click="changercity('上海')">上海</a>
+            <a @click="changercity('杭州')">杭州</a>
+        </div>
+        <div class="tianqi">
+            <ul v-for="item in weatherList">
+                <li>{{item.type}}</li>
+                <li>{{item.low}} -- {{item.high}}</li>
+                <li>{{item.date}}</li>
+            </ul>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        var app = new Vue({
+            el:"#app",
+            data:{
+                city:'',
+                weatherList:[]
+            },
+            methods:{
+                searchWeather:function(){
+                    // console.log("天气查询");
+                    // console.log(this.city);
+                    var that = this;
+                    axios.get("http://wthrcdn.etouch.cn/weather_mini?city="+this.city).then(
+                        function(response){
+                            // console.log(response.data.data.forecast);
+                            that.weatherList = response.data.data.forecast;
+                        }
+                    )
+                    .catch(function(err){})
+                },
+                changercity:function(city){
+                    this.city = city;
+                    this.searchWeather();
+                }
+            }
+            
+        })
+    </script>
+</body>
+</html>
+
